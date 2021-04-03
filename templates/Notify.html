@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Push</title>
+</head>
+<body>
+    <header>
+        <h1 style="text-align: center;">Notify</h1>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+    </nav>
+
+    <section id="notifications">
+        <form onsubmit="sendNotification(this, event)">
+            <input type="text" name="recipient" id="recipient" placeholder="Recipient..">
+            <input type="submit" value="Notify">
+        </form>
+
+        <h5>Recieved Notifications</h5>
+
+        <div id="recieved">
+        </div>
+    </section>
+
+    <script>
+        // Div to display incoming notifications
+        const recieved = document.querySelector('#recieved')
+
+        // Listener to recieve events posted from service worker, ie notifications
+        navigator.serviceWorker.onmessage = (event) => {
+
+            // Append recived notifications
+            recieved.insertAdjacentHTML('beforeend', `<p>${event.data.message}<p>`)
+        }
+
+        // Send notification to the specified recipient
+        async function sendNotification(form, event) {
+            event.preventDefault()
+
+            const recipient = form.recipient.value
+
+            const response = await fetch(`/send?recipient=${ recipient }`)
+            const result = await response.json()
+
+            console.dir(result)
+        }
+    </script>
+</body>
+</html>

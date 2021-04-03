@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Push</title>
+</head>
+<body>
+    <header>
+        <h1 style="text-align: center;">Home</h1>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('notify') }}">Notify</a>
+        <p>User: <span id="username">{{username}}</span></p>
+    </nav>
+
+    <h4>Notifications:&nbsp;
+        <span id="count">0</span>
+    </h4>
+
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>
